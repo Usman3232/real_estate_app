@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:real_estate_app/models/sellmyhome.dart';
+import 'package:real_estate_app/models/sellmyhomemodal.dart';
 import 'package:real_estate_app/utils/aut_btn.dart';
 import 'package:real_estate_app/utils/constants.dart';
 import 'package:real_estate_app/views/pages/addnewproperty/addnewproperty.dart';
+import 'package:real_estate_app/views/pages/addnewpropertydetail.dart/newpropertydetail.dart';
 import 'package:real_estate_app/views/pages/sellmyhome/sellmyhomecard.dart';
 
 import '../../../utils/TextView.dart';
@@ -53,11 +54,17 @@ class SellMyHome extends StatelessWidget {
                 itemCount: sellmyhome_model.length,
                 itemBuilder: (context, index) {
                   return SellMyHomeCard(
-                      bath: sellmyhome_model[index].bath,
-                      bed: sellmyhome_model[index].bed,
-                      areaspace: sellmyhome_model[index].areaspace,
-                      price: sellmyhome_model[index].price,
-                      image: sellmyhome_model[index].image);
+                    bath: sellmyhome_model[index].bath,
+                    bed: sellmyhome_model[index].bed,
+                    areaspace: sellmyhome_model[index].areaspace,
+                    price: sellmyhome_model[index].price,
+                    image: sellmyhome_model[index].image,
+                    onPressed: () {
+                      Get.to(NewPropertyDetail(
+                        product: sellmyhome_model[index],
+                      ));
+                    },
+                  );
                 },
               ),
               SizedBox(

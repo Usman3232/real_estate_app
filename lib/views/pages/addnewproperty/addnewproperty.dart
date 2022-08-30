@@ -1,15 +1,25 @@
 import 'package:animated_horizontal_calendar/animated_horizontal_calendar.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:real_estate_app/views/pages/sellmyhome/sellmyhome.dart';
+import 'package:real_estate_app/models/sellmyhomemodal.dart';
 import 'package:real_estate_app/utils/aut_btn.dart';
 import 'package:real_estate_app/utils/auth_input_text_field.dart';
 import 'package:real_estate_app/utils/constants.dart';
+import 'package:real_estate_app/views/pages/FAQs/faqs.dart';
+import 'package:real_estate_app/views/pages/addnewproperty/components/contact.dart';
+import 'package:real_estate_app/views/pages/addnewproperty/components/description.dart';
+import 'package:real_estate_app/views/pages/addnewproperty/components/timetosell.dart';
+import 'package:real_estate_app/views/pages/addnewpropertydetail.dart/newpropertydetail.dart';
 
 import '../../../utils/TextView.dart';
 import '../../../utils/size_config.dart';
 import 'components/Address.dart';
+import 'components/homefact.dart';
+import 'components/meetwithagent.dart';
 import 'components/reasonsellinghome.dart';
 import 'components/selectamenitities.dart';
 
@@ -21,6 +31,21 @@ class AddNewProperty extends StatefulWidget {
 }
 
 class _AddNewPropertyState extends State<AddNewProperty> {
+  String section = "address";
+  double sliderVal = 12.5;
+  int val = 1;
+  List Title = [
+    "Address",
+    "Meet with a agent",
+    "Time to sell",
+    "Reason selling home",
+    "Description",
+    "Home facts",
+    "Contact",
+    "Select Amenitities"
+  ];
+  int index = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +90,7 @@ class _AddNewPropertyState extends State<AddNewProperty> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextView(
-                      text: 'Address',
+                      text: Title[index],
                       size: SizeConfig.textMultiplier * 2,
                       color: Colors.black,
                       fontWeight: FontWeight.w500,
@@ -78,7 +103,7 @@ class _AddNewPropertyState extends State<AddNewProperty> {
                           color: Colors.black87),
                       child: Center(
                         child: TextView(
-                          text: '01 / 08',
+                          text: "0$val/ 08",
                           color: Colors.white,
                         ),
                       ),
@@ -88,25 +113,78 @@ class _AddNewPropertyState extends State<AddNewProperty> {
                 SizedBox(
                   height: SizeConfig.heightMultiplier * 2.5,
                 ),
-                LinearProgressIndicator(
-                  value: 0.125,
-                  color: AppColors.primarycolor,
-                  backgroundColor: Colors.grey.shade200,
+                FAProgressBar(
+                  maxValue: 100,
+                  progressColor: AppColors.primarycolor,
+                  backgroundColor: Colors.grey.shade100,
+                  size: SizeConfig.heightMultiplier * 1,
+                  currentValue: sliderVal,
                 ),
                 SizedBox(
                   height: SizeConfig.heightMultiplier * 3,
                 ),
-                Address(),
-                // MeetWithAgent(),
-                // TimeToSell(),
-                // Description(),
-                // ReasonSellingHome(),
-                // SelectAmenitities(),
-                // Contact(),
-
+                section == "address"
+                    ? Address()
+                    : section == "meet"
+                        ? MeetWithAgent()
+                        : section == "time"
+                            ? TimeToSell()
+                            : section == "reason"
+                                ? ReasonSellingHome()
+                                : section == "description"
+                                    ? Description()
+                                    : section == "homeFact"
+                                        ? HomeFact()
+                                        : section == "contact"
+                                            ? Contact()
+                                            : section == "select"
+                                                ? SelectAmenitities()
+                                                : SizedBox(),
                 Spacer(),
                 CustomAuthButton(
-                  callback: () {},
+                  callback: () {
+                    if (section == "address") {
+                      section = "meet";
+                      sliderVal = sliderVal + 12.5;
+                      val = val + 1;
+                    } else if (section == "meet") {
+                      section = "time";
+                      sliderVal = sliderVal + 12.5;
+                      val = val + 1;
+                    } else if (section == "time") {
+                      section = "reason";
+                      sliderVal = sliderVal + 12.5;
+                      val = val + 1;
+                    } else if (section == "reason") {
+                      section = "description";
+                      sliderVal = sliderVal + 12.5;
+                      val = val + 1;
+                    } else if (section == "description") {
+                      section = "homeFact";
+                      sliderVal = sliderVal + 12.5;
+                      val = val + 1;
+                    } else if (section == "homeFact") {
+                      section = "contact";
+                      sliderVal = sliderVal + 12.5;
+                      val = val + 1;
+                    } else if (section == "contact") {
+                      section = "select";
+                      sliderVal = sliderVal + 12.5;
+                      val = val + 1;
+                    } else if (section == "select") {
+                      Get.to(SellMyHome());
+                    }
+                    setState(() {});
+                    if (index == Title.length - 1) {
+                      setState(() {
+                        index = index;
+                      });
+                    } else {
+                      setState(() {
+                        index++;
+                      });
+                    }
+                  },
                   colour: AppColors.btnclr,
                   height: SizeConfig.heightMultiplier * 8,
                   width: SizeConfig.widthMultiplier * 100,
@@ -119,59 +197,6 @@ class _AddNewPropertyState extends State<AddNewProperty> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class Contact extends StatefulWidget {
-  const Contact({Key? key}) : super(key: key);
-
-  @override
-  State<Contact> createState() => _ContactState();
-}
-
-class _ContactState extends State<Contact> {
-  bool numberfocus = false;
-  bool aboutfocus = false;
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextView(
-          text: 'Tell us a little about Yourself',
-          size: SizeConfig.textMultiplier * 2.5,
-          color: Colors.black,
-          fontWeight: FontWeight.w500,
-        ),
-        SizedBox(
-          height: SizeConfig.heightMultiplier * 2,
-        ),
-        AuthTextInputField(
-            bordercolor: Colors.transparent,
-            prefixIcon: CountryPickerDropdown(onValuePicked: (value) {
-              
-            },),
-            onTap: () {
-              setState(() {
-                numberfocus = true;
-                aboutfocus = false;
-              });
-            },
-            isfocus: numberfocus),
-        SizedBox(
-          height: SizeConfig.heightMultiplier * 3,
-        ),
-        AuthTextInputField(
-            bordercolor: Colors.transparent,
-            labelText: 'Is there anything we should know?',
-            onTap: () {
-              setState(() {
-                numberfocus = false;
-                aboutfocus = true;
-              });
-            },
-            isfocus: aboutfocus)
-      ],
     );
   }
 }

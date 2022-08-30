@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:real_estate_app/views/pages/authentication/signin.dart';
+import 'package:real_estate_app/views/pages/myhomescreen/myhome.dart';
 
 import 'utils/size_config.dart';
 import 'views/pages/splash/splash.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
             SizeConfig().init(constraints, orientation);
             return GetMaterialApp(
               home: Splash(),
+              // home: MyHome(),
               // home:Onboard(),
               // home: SignIn(),
               debugShowCheckedModeBanner: false,

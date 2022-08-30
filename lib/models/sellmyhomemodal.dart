@@ -1,8 +1,8 @@
-class SellMyHome {
+class SellMyHomeModal {
   final int bath, bed;
   final String areaspace, price, image;
 
-  SellMyHome({
+  SellMyHomeModal({
     required this.bath,
     required this.bed,
     required this.areaspace,
@@ -11,22 +11,22 @@ class SellMyHome {
   });
 }
 
-List<SellMyHome> sellmyhome_model = [
-  SellMyHome(
+List<SellMyHomeModal> sellmyhome_model = [
+  SellMyHomeModal(
     bath: 3,
     bed: 2,
     areaspace: "1,800",
     price: "1,600",
     image: 'assets/images/furnishedhome1.jpg',
   ),
-  SellMyHome(
+  SellMyHomeModal(
     bath: 5,
     bed: 23,
     areaspace: "1,500",
     price: "1,900",
     image: 'assets/images/furnishedhome2.jpg',
   ),
-  SellMyHome(
+  SellMyHomeModal(
     bath: 1,
     bed: 3,
     areaspace: "1,100",

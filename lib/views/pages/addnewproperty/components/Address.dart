@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 import '../../../../utils/TextView.dart';
 import '../../../../utils/auth_input_text_field.dart';
@@ -18,6 +20,14 @@ class _AddressState extends State<Address> {
   bool statefocus = false;
   bool zipcodefocus = false;
   bool istick = false;
+  // String state = '';
+  TextEditingController streetaddresscontroller = TextEditingController();
+  TextEditingController unitcontroller = TextEditingController();
+  TextEditingController citynamecontroller = TextEditingController();
+  TextEditingController selectstatecontroller = TextEditingController();
+  TextEditingController zipcodecontroller = TextEditingController();
+
+  List regions = ["Punjab", "Sidh", "Balochistan", "KPK"];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -35,7 +45,8 @@ class _AddressState extends State<Address> {
         AuthTextInputField(
           isfocus: streetfocus,
           labelText: 'Street adress',
-          // textEditingController: passwordController,
+          inputType: TextInputType.streetAddress,
+          textEditingController: streetaddresscontroller,
           bordercolor: Colors.transparent,
           cursorColor: Color(0xFF2FA2B9),
           fillColor: Color(0xffF4F5F6),
@@ -55,7 +66,9 @@ class _AddressState extends State<Address> {
         AuthTextInputField(
           isfocus: unitfocus,
           labelText: 'Unit number',
-          // textEditingController: passwordController,
+
+          inputType: TextInputType.number,
+          textEditingController: unitcontroller,
           bordercolor: Colors.transparent,
           cursorColor: Color(0xFF2FA2B9),
           fillColor: Color(0xffF4F5F6),
@@ -75,7 +88,7 @@ class _AddressState extends State<Address> {
         AuthTextInputField(
           isfocus: cityfocus,
           labelText: 'City name',
-          // textEditingController: passwordController,
+          textEditingController: citynamecontroller,
           bordercolor: Colors.transparent,
           cursorColor: Color(0xFF2FA2B9),
           fillColor: Color(0xffF4F5F6),
@@ -95,19 +108,68 @@ class _AddressState extends State<Address> {
         AuthTextInputField(
           isfocus: statefocus,
           labelText: 'Select State',
-          // textEditingController: passwordController,
+          textEditingController: selectstatecontroller,
           bordercolor: Colors.transparent,
           cursorColor: Color(0xFF2FA2B9),
           fillColor: Color(0xffF4F5F6),
           suffixIcon: IconButton(
-              onPressed: () {
-                setState(() {
-                  istick = !istick;
-                });
-              },
-              icon: istick
-                  ? Icon(Icons.arrow_forward_ios_outlined)
-                  : Icon(Icons.keyboard_arrow_down_sharp)),
+            onPressed: () {
+              setState(() {
+                istick = !istick;
+              });
+
+              Get.dialog(Scaffold(
+                backgroundColor: Colors.transparent,
+                body: Center(
+                  child: Container(
+                      height: SizeConfig.heightMultiplier * 40,
+                      width: SizeConfig.widthMultiplier * 90,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Center(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: regions.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectstatecontroller.text = regions[index];
+                                });
+                                Get.back();
+                              },
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12),
+                                  child: TextView(
+                                    text: regions[index],
+                                    color: Colors.black,
+                                    size: SizeConfig.textMultiplier * 3,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      )),
+                ),
+              ));
+            },
+            icon: istick
+                ? Icon(
+                    Icons.arrow_forward_ios_outlined,
+                    color: Colors.black26,
+                    size: SizeConfig.imageSizeMultiplier * 6,
+                  )
+                : Icon(
+                    Icons.keyboard_arrow_down_sharp,
+                    size: SizeConfig.imageSizeMultiplier * 9,
+                    color: Colors.black26,
+                  ),
+          ),
           onTap: () {
             setState(() {
               streetfocus = false;
@@ -122,9 +184,13 @@ class _AddressState extends State<Address> {
           height: SizeConfig.heightMultiplier * 2,
         ),
         AuthTextInputField(
+          validator: (val){
+            return null;
+          },
           isfocus: zipcodefocus,
           labelText: 'Zip code',
-          // textEditingController: passwordController,
+          textEditingController: zipcodecontroller,
+          inputType: TextInputType.number,
           bordercolor: Colors.transparent,
           cursorColor: Color(0xFF2FA2B9),
           fillColor: Color(0xffF4F5F6),

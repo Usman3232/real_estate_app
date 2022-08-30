@@ -8,6 +8,8 @@ import 'package:real_estate_app/views/pages/FAQs/faqs.dart';
 
 import '../../../utils/TextView.dart';
 import '../../../utils/size_config.dart';
+import 'components/applicationtile.dart';
+import 'components/supporttile.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -148,81 +150,6 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class SupportTile extends StatelessWidget {
-  const SupportTile({
-    Key? key,
-    required this.title,
-    required this.onPressed,
-  }) : super(key: key);
-  final String title;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 9),
-        child: Row(
-          children: [
-            TextView(
-              text: title,
-              color: Colors.black,
-              size: SizeConfig.textMultiplier * 2,
-              fontWeight: FontWeight.w500,
-            ),
-            Spacer(),
-            Icon(
-              Icons.arrow_forward_ios_outlined,
-              color: Colors.black54,
-              size: SizeConfig.heightMultiplier * 2,
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ApplicationTile extends StatelessWidget {
-  const ApplicationTile({
-    Key? key,
-    required this.title,
-    required this.name,
-  }) : super(key: key);
-  final String title;
-  final String name;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 9),
-      child: Row(
-        children: [
-          TextView(
-            text: title,
-            color: Colors.black,
-            size: SizeConfig.textMultiplier * 2,
-            fontWeight: FontWeight.w500,
-          ),
-          Spacer(),
-          TextView(
-            text: name,
-            color: Colors.black54,
-            size: SizeConfig.textMultiplier * 2,
-            fontWeight: FontWeight.w400,
-          ),
-          Icon(
-            Icons.arrow_forward_ios_outlined,
-            color: Colors.black54,
-            size: SizeConfig.heightMultiplier * 2,
-          )
-        ],
       ),
     );
   }

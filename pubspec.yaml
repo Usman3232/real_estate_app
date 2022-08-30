@@ -42,6 +42,8 @@ dependencies:
   animated_horizontal_calendar: ^0.0.3
   dots_indicator: ^2.1.0
   country_pickers: ^2.0.0
+  flutter_animation_progress_bar: ^2.2.1
+  fl_country_code_picker: ^0.0.2+1
 
 dev_dependencies:
   flutter_test:
